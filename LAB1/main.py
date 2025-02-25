@@ -1,11 +1,9 @@
-#### Test of the functions ####
-
 import MyNumber
 import Operator
 import Computation
 
 if __name__ == "__main__":
-    number = MyNumber.MyNumber(5)
+    number = MyNumber.MyNumber(7)
     print(number.get_value())
 
     op = Operator.Operator("+")

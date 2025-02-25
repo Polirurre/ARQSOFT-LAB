@@ -1,13 +1,10 @@
 class MyNumber():
 
-    def __init__(self, value):
+    def __init__(self, value: float):
         self.value = value
     
-    def get_value(self):
+    def get_value(self) -> float:
         return self.value
     
-    def set_value(self, value):
+    def set_value(self, value: float):
         self.value = value
-
-#number = MyNumber(5)
-#print(number.get_value())
