@@ -1,12 +1,13 @@
 class MyNumber():
 
-    def __init__(self, value: float):
-        self.value = float(value)
+    def __init__(self, value):
+        self.value = value
     
-    def getValue(self) -> float:
+    def get_value(self):
         return self.value
+    
+    def set_value(self, value):
+        self.value = value
 
-mi_numero = MyNumber(15)
-print(f"atributo value: {mi_numero.getValue()}")
-#posible_valor_estatico = MyNumber.value
-#print(posible_valor_estatico)
+#number = MyNumber(5)
+#print(number.get_value())
