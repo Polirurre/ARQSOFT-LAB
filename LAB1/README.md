@@ -4,7 +4,7 @@
 
 Develop the classes shown in the UML class diagram shown at the end of this document, as specified in the Javadoc attached to this script.
 
-![Stage 1](/images/stage_1.png)
+![Stage 1](/LAB1/images/stage_1.png)
 
 After that, create a Main class and insert there the main() method. Its execution has to perform the following tasks:
 
