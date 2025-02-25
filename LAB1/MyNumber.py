@@ -9,5 +9,3 @@ class MyNumber():
     def set_value(self, value):
         self.value = value
 
-#number = MyNumber(5)
-#print(number.get_value())
