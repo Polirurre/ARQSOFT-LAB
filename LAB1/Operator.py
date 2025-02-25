@@ -1,3 +1,5 @@
+import Operand
+
 class Operator():
     
     def __init__(self, operation: str):
@@ -13,7 +15,10 @@ class Operator():
             raise ValueError("Invalid operation. Allowed operations are: '+', '-', '*', '/'")
         self.operation = operation
     
-    def compute(self, first: float, second: float):
+    def compute(self, first: Operand, second: Operand) -> float:
+        first = first.get_value()
+        second = second.get_value()
+
         if self.operation == "+":
             return first + second
         elif self.operation == "-":
