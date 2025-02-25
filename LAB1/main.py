@@ -1,5 +1,3 @@
-#### Test of the functions ####
-
 import MyNumber
 import Operator
 import Computation

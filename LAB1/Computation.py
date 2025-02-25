@@ -1,6 +1,6 @@
 class Computation():
 
-    def __init__ (self, first_operand, operator, second_operand):
+    def __init__ (self, first_operand: float, operator: str, second_operand: float):
         self.first_operand = first_operand
         self.operator = operator
         self.second_operand = second_operand
