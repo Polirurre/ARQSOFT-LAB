@@ -1,6 +1,6 @@
-from Operand import Operand
+from .Operand import Operand
 
-class MyNumber(Operand):
+class Number(Operand):
 
     def __init__(self, value: float):
         self.value = value

@@ -1,5 +1,5 @@
-import Operand
-import Operator
+from Operands.Operand import Operand
+from Operators.Operator import Operator
 from abc import ABC, abstractmethod
 
 class SimpleExpression(ABC):

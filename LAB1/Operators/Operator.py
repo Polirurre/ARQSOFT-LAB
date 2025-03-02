@@ -1,4 +1,4 @@
-import Operand
+from Operands.Operand import Operand
 
 class Operator():
     

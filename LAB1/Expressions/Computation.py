@@ -1,6 +1,6 @@
-from SimpleExpression import SimpleExpression
-from Operand import Operand
-from Operator import Operator
+from Expressions.SimpleExpression import SimpleExpression
+from Operands.Operand import Operand
+from Operators.Operator import Operator
 
 class Computation(SimpleExpression):
     

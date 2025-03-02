@@ -1,14 +1,14 @@
-from SimpleExpression import SimpleExpression
-from Operand import Operand
-from MyNumber import MyNumber
-from Operator import Operator
-from Computation import Computation
+from Expressions.SimpleExpression import SimpleExpression
+from Operands.Operand import Operand
+from Operands.Number import Number
+from Operators.Operator import Operator
+from Expressions.Computation import Computation
 
 def main():
-    operand1 = MyNumber(15)
-    operand2 = MyNumber(5)
-    operand3 = MyNumber(20)
-    operand4 = MyNumber(10)
+    operand1 = Number(15)
+    operand2 = Number(5)
+    operand3 = Number(20)
+    operand4 = Number(10)
     operator = Operator("+")  
     
     computation1 = Computation(operand1, operator, operand2)
