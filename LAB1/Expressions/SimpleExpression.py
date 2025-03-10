@@ -21,6 +21,3 @@ class SimpleExpression(ABC):
     @abstractmethod
     def evaluate(self, memory):
         pass
-
-
-    
