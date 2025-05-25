@@ -1,15 +1,15 @@
 class FileController:
-    def __init__(self, formulacomputing):
+    def __init__(self, formulaManager):
         """
-        Initializes the FileController with a FormulaComputing instance for loading formulas.
+        Initializes the FileController with a FormulaManager instance for loading formulas.
 
         Data Needed:
-            - formulacomputing (FormulaComputing): An instance to compute formula values during loading.
+            - formulaManager (FormulaManager): An instance to compute formula values during loading.
 
         Exceptions:
             - None
 
-        Returns:filesave
+        Returns:
             - None
         """
         pass
@@ -45,5 +45,20 @@ class FileController:
 
         Returns:
             - Spreadsheet: The updated spreadsheet object with loaded data.
+        """
+        pass
+    def create_file(self, path):
+        """
+        Creates a new empty file at the specified path for spreadsheet data.
+
+        Data Needed:
+            - path (str): The file path where the new empty file will be created.
+
+        Exceptions:
+            - IOError: If there is an error creating the file (ex.: permission denied or invalid path).
+            - FileExistsError: If a file already exists at the specified path.
+
+        Returns:
+            - None
         """
         pass

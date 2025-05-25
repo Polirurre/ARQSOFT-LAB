@@ -1,10 +1,11 @@
 class Terminal:
-    def __init__(self, controller):
+    command_types = {'RF', 'C', 'E', 'L', 'S'}
+    def __init__(self):
         """
-        Initializes the Terminal with a reference to the SpreadsheetController.
+        Initializes the Terminal.
 
         Data Needed:
-            - controller (SpreadsheetController): The controller to delegate command execution and spreadsheet display to.
+            - None
 
         Exceptions:
             - None
@@ -12,32 +13,14 @@ class Terminal:
         Returns:
             - None
         """
-        self.controller = controller
-        self.command_types = {'RF', 'C', 'E', 'L', 'S'}  # Valid command types
         self.command = ""  # Placeholder for the command string to be processed
-
-    def process_command(self):
-        """
-        Parses and executes the current command (RF, C, E, L, S) stored in self.command, delegating to the appropriate function based on the command type.
-
-        Data Needed:
-            - None (uses self.command, set by read_commands)
-
-        Exceptions:
-            - InvalidCommandError: If the command is unrecognized or has incorrect arguments.
-            - InvalidArgumentError: If the command arguments are invalid (e.g., wrong number of arguments or invalid format).
-            - FileNotFoundError: If the RF command specifies a file that cannot be found.
-
-        Returns:
-            - None
-        """
 
     def read_commands(self, command_input):
         """
         Sets the command string to be processed and triggers processing of the commands.
 
         Data Needed:
-            - command_input (str): The input string containing one or more commands to process (e.g., "C" or "RF commands.txt").
+            - command_input (str): The input string containing commands to process.
 
         Exceptions:
             - FileNotFoundError: If the RF command specifies a file that cannot be found.
@@ -45,7 +28,7 @@ class Terminal:
             - InvalidArgumentError: If a command has invalid arguments.
 
         Returns:
-            - None
+            - command (str): The command string that was set for processing.
         """
         
     def validate_command(self, command):

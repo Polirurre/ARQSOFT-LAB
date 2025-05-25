@@ -1,0 +1,31 @@
+# Project settings
+
+PROJECT_NAME = "Spreadsheet Project"
+OUTPUT_DIRECTORY = docs
+INPUT = .
+FILE_PATTERNS = \*.py
+RECURSIVE = YES
+
+# Enable Python support
+
+OPTIMIZE_OUTPUT_FOR_C = NO
+EXTRACT_ALL = YES
+EXTRACT_PRIVATE = YES
+EXTRACT_STATIC = YES
+
+# Output formats
+
+GENERATE_HTML = YES
+GENERATE_LATEX = NO
+GENERATE_XML = NO
+
+# Include docstrings
+
+JAVADOC_AUTOBRIEF = YES
+PYTHON_DOCSTRING = YES
+
+# Enable diagrams if Graphviz is installed
+
+HAVE_DOT = YES
+CALL_GRAPH = YES
+CALLER_GRAPH = YES
