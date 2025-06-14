@@ -1,6 +1,6 @@
-from src.Content.Content import Content
+from Content.Content import Content
 
-class NumberContent(Content):
+class NumericalContent(Content):
     def __init__(self, number : float):
         super(). __init__(number)
 

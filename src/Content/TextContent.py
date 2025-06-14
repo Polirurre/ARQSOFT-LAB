@@ -1,4 +1,4 @@
-from src.Content.Content import Content
+from Content.Content import Content
 
 class TextContent(Content):
     def __init__(self, string: str):

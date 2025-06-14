@@ -1,4 +1,4 @@
-from src.Spreadsheet.Coordinate import Coordinate
+from Spreadsheet.Coordinate import Coordinate
 
 class Cell:
     def __init__(self, rowNumber, columnNumber, content=None, coordinate=None):
