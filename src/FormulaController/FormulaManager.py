@@ -1,36 +1,19 @@
+from src.FormulaController.PostfixEvaluator import PostfixEvaluator
 from .Parser import Parser
 from .PostFix import GeneratePostfix
 from .Tokenizer import Tokenizer
 
 class FormulaManager:
     def __init__(self):
-        """
-        Initializes the FormulaManager.
-
-        Data Needed:
-            - None
-
-        Exceptions:
-            - None
-
-        Returns:
-            - None
-        """
         self.tokenize = Tokenizer()
         self.parse = Parser()
         self.generatePostfix = GeneratePostfix()
+        self.evaluator = PostfixEvaluator()
         pass
 
-    def computeFormula(self, formula):
-        """
-        Computes the result of a given formula.
-
-        Data Needed:
-            - formula: The formula to compute.
-
-        Exceptions:
-            - ValueError: If the formula is invalid.
-
-        Returns:
-            - The postfix result of the formula.
-        """
+    def computeFormula(self, formula, context=None):
+        token_list = self.tokenize.tokenize(formula)
+        parsed_list = self.parse.parse(token_list)
+        postfix = self.generatePostfix.infixToPostfix(parsed_list)
+        result = self.evaluator.evaluate(postfix, context)
+        return result
