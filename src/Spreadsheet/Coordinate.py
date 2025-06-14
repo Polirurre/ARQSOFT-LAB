@@ -1,74 +1,19 @@
 class Coordinate:
     def __init__(self, row, col):
-        """
-        Initializes a Coordinate with row and column numbers.
+        self.row = row
+        self.col = col
 
-        Data Needed:
-            - row (int): The row number of the cell (ex.: 1 for 'A1').
-            - col (int): The column number of the cell (ex.: 1 for 'A').
+    def getRowNum(self):
+        return self.row
 
-        Exceptions:
-            - ValueError: If row or col is invalid (ex.: non-positive integers).
-
-        Returns:
-            - None
-        """
-
-    def getRow(self):
-        """
-        Retrieves the row number of the coordinate.
-
-        Data Needed:
-            - None (uses self.row)
-
-        Exceptions:
-            - None
-
-        Returns:
-            - int: The row number of the coordinate.
-        """
-
-    def getCol(self):
-        """
-        Retrieves the column number of the coordinate.
-
-        Data Needed:
-            - None (uses self.col)
-
-        Exceptions:
-            - None
-
-        Returns:
-            - int: The column number of the coordinate.
-        """
+    def getColNum(self):
+        return self.col
 
     def setRow(self, row):
-        """
-        Sets the row number of the coordinate.
-
-        Data Needed:
-            - row (int): The new row number to set.
-
-        Exceptions:
-            - ValueError: If row is invalid (ex.: non-positive integer).
-
-        Returns:
-            - None
-        """
+        self.row = row
 
     def setCol(self, col):
-        """
-        Sets the column number of the coordinate.
-
-        Data Needed:
-            - col (int): The new column number to set.
-
-        Exceptions:
-            - ValueError: If col is invalid (ex.: non-positive integer).
-
-        Returns:
-            - None
-        """
+        self.col = col
 
     @staticmethod
     def column_to_number(column):
