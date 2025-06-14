@@ -1,4 +1,4 @@
-from FormulaController.PostfixEvaluator import EvaluatePostfix
+#from FormulaController.PostfixEvaluator import EvaluatePostfix
 from Content.Content import Content
 
 class FormulaContent(Content):
@@ -18,8 +18,8 @@ class FormulaContent(Content):
     def setFormula(self, formula: str) -> None:
         self.formula = formula
 
-    def setValue(self, formula: str) -> None:
-        self.value = EvaluatePostfix(formula)
+    #def setValue(self, formula: str) -> None:
+    #    self.value = EvaluatePostfix(formula)
 
     def __repr__(self) -> str:
         return f"FormulaContent(formula={self.formula}, value={self.value})"
