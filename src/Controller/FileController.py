@@ -1,3 +1,7 @@
+import os
+
+from FormulaController.FormulaManager import FormulaManager
+
 class FileController:
     def __init__(self, formulaManager):
         """
@@ -12,53 +16,49 @@ class FileController:
         Returns:
             - None
         """
-        pass
+        self.formulaManager = formulaManager
 
     def save_file(self, spreadsheet, path):
-        """
-        Saves the spreadsheet data to a file at the specified path using a custom text format.
-
-        Data Needed:
-            - spreadsheet (Spreadsheet): The spreadsheet object containing cells to save.
-            - path (str): The file path where the spreadsheet will be saved.
-
-        Exceptions:
-            - IOError: If there is an error writing to the file.
-
-        Returns:
-            - None
-        """
-        pass
+        try:
+            with open(path, 'w', encoding='utf-8') as f:
+                for coord, cell in spreadsheet.cells.items():
+                    content = cell.content
+                    f.write(f"{coord}={content}\n")
+        except IOError as e:
+            raise IOError(f"Failed to save file: {e}")
 
     def load_file(self, spreadsheet, path):
-        """
-        Loads spreadsheet data from a file at the specified path into the provided spreadsheet object.
+        if not os.path.isfile(path):
+            raise FileNotFoundError(f"File does not exist: {path}")
 
-        Data Needed:
-            - spreadsheet (Spreadsheet): The spreadsheet object to populate with loaded data.
-            - path (str): The file path from which to load the spreadsheet data.
+        try:
+            with open(path, 'r', encoding='utf-8') as f:
+                for line in f:
+                    if '=' not in line:
+                        raise ValueError(f"Invalid line format: {line.strip()}")
+                    coord, content = line.strip().split('=', 1)
 
-        Exceptions:
-            - FileNotFoundError: If the specified file does not exist.
-            - IOError: If there is an error reading the file.
-            - ValueError: If the file format is invalid or incompatible because of the file being corrupted.
+                    if content.startswith('='):
+                        try:
+                            value = self.formula_manager.computeFormula(content[1:], spreadsheet)
+                        except Exception as e:
+                            raise ValueError(f"Error computing formula in cell {coord}: {e}")
+                        spreadsheet.set_cell(coord, content, value)
+                    else:
+                        spreadsheet.set_cell(coord, content, content)
 
-        Returns:
-            - Spreadsheet: The updated spreadsheet object with loaded data.
-        """
+        except IOError as e:
+            raise IOError(f"Failed to read file: {e}")
+        except ValueError as ve:
+            raise ValueError(f"File format is invalid or corrupted: {ve}")
+
+        return spreadsheet
         pass
+
     def create_file(self, path):
-        """
-        Creates a new empty file at the specified path for spreadsheet data.
-
-        Data Needed:
-            - path (str): The file path where the new empty file will be created.
-
-        Exceptions:
-            - IOError: If there is an error creating the file (ex.: permission denied or invalid path).
-            - FileExistsError: If a file already exists at the specified path.
-
-        Returns:
-            - None
-        """
-        pass
+        if os.path.exists(path):
+            raise FileExistsError(f"The file already exist: {path}")
+        try:
+            open(path, 'x', encoding='utf-8').close()
+        except IOError as e:
+            raise IOError(f"Failed to create file: {e}")
