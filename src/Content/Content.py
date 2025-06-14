@@ -6,9 +6,9 @@ class Content(ABC):
         self.value = value
     
     @abstractmethod
-    def get_value(self):
+    def getValue(self):
         pass
     
     @abstractmethod
-    def set_value(self, value):
+    def setValue(self, value):
         pass

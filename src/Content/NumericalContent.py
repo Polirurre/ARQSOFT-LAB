@@ -5,8 +5,8 @@ class NumericalContent(Content):
         super(). __init__(number)
 
 
-    def get_value(self) -> float:
+    def getValue(self) -> float:
         return self.value
     
-    def set_value(self, value: float) -> None:
+    def setValue(self, value: float) -> None:
         self.value = value

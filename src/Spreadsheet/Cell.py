@@ -1,16 +1,29 @@
 from Spreadsheet.Coordinate import Coordinate
+from Content.NumericalContent import NumericalContent
+from Content.TextContent import TextContent
+from Content.FormulaContent import FormulaContent
 
 class Cell:
-    def __init__(self, rowNumber, columnNumber, content=None, coordinate=None):
-        self.coordinate = Coordinate(rowNumber, columnNumber)
-        self.refCells = []
-        self.content = content if content is not None else ""
+    def __init__(self, coordinate=None, content=None):
+        self.coordinate = coordinate
+        self.setValue(content if content is not None else "")
+        self.refCells = set()
 
     def getValue(self):
         return self.content
 
-    def setValue(self, value):
-        self.content = value
+    def setValue(self, input: str):
+        print(input)
+        try:
+            # Try converting the string to a float
+            # If successful, add Numbercontent
+            self.content = NumericalContent(float(input))
+        except ValueError:
+            # If conversion fails, it's not a numeric string
+            if input.startswith('='): # Check if it starts with '='
+                self.content = FormulaContent(input)
+            else:# Otherwise, it's a regular string
+                self.content = TextContent(input)
 
     def getDependentCells(self):
         """
