@@ -16,7 +16,6 @@ class Cell:
         return str(self.content.getValue())
 
     def setValue(self, input: str):
-        print(input) #TO DO
         try:
             # Try converting the string to a float
             # If successful, add Numbercontent
