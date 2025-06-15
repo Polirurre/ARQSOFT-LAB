@@ -1,110 +1,87 @@
-import os
 import csv
-from SpreadsheetMarkerForStudents.usecasesmarker.reading_spreadsheet_exception import ReadingSpreadsheetException
+import os
+import argparse
+import re
+from Spreadsheet.Coordinate import Coordinate
 from SpreadsheetMarkerForStudents.usecasesmarker.saving_spreadsheet_exception import SavingSpreadsheetException
-#from Spreadsheet.Actions.ShowContent import ShowContent
 from Spreadsheet.Cell import Cell
 
 class FileController:
     def __init__(self):
-        self.show = ShowContent()
-        self.supported_extensions = ['.csv', '.txt', '.s2v']
+        pass
 
-    def _validate_file_path(self, file_path):
-        """Validate the file path and its extension."""
-        if not file_path or file_path.strip() == "":
-            raise ReadingSpreadsheetException("Invalid file path: None or empty")
-        _, ext = os.path.splitext(file_path)
-        if ext.lower() not in self.supported_extensions:
-            raise ReadingSpreadsheetException(f"Unsupported file format: {ext}")
-        return True
-
-    def _validate_directory(self, directory_path):
-        """Validate the directory path."""
-        if not os.path.exists(directory_path):
-            raise SavingSpreadsheetException(f"Invalid directory path: {directory_path}")
-        return True
-
-    def create(self, path):
-        """Create a new empty spreadsheet file at the specified path."""
+    def save(self, filepath, spreadsheet):
         try:
-            directory, file_name = os.path.split(path)
-            if not file_name:
-                raise SavingSpreadsheetException("Invalid file name: None or empty")
-            if not self._validate_file_path(path):
-                return False
-            if directory:
-                self._validate_directory(directory)
-            else:
-                directory = os.getcwd()
+            # Get maximum dimensions of the spreadsheet
+            max_row, max_col = spreadsheet.get_max_dimensions()
             
-            with open(path, 'w') as file:
-                file.write("")  # Create an empty file
-            print(f"Empty spreadsheet created successfully at {path}")
-            return True
-        except (ReadingSpreadsheetException, SavingSpreadsheetException) as e:
-            print(f"Error creating file: {str(e)}")
-            return False
+            # If spreadsheet is empty, create an empty file
+            if max_row == 0 and max_col == 0:
+                with open(filepath, 'w', encoding='utf-8') as f:
+                    return
+            
+            # Prepare lines for writing
+            lines = []
+            for row in range(1, max_row + 1):
+                row_content = []
+                for col in range(1, max_col + 1):
+                    coord = Coordinate.to_spreadsheet_format(row, col)
+                    try:
+                        # Get cell value
+                        value = spreadsheet.get(coord)
+                        # Convert value to string, handling different types
+                        if isinstance(value, (int, float)):
+                            str_value = str(value)
+                        else:
+                            str_value = str(value)
+                            # Replace commas with semicolons in formula arguments
+                            if str_value.startswith('='):
+                                str_value = str_value.replace(',', ';')
+                        row_content.append(str_value)
+                    except KeyError:
+                        # Empty cell
+                        row_content.append('')
+                # Join row contents with semicolons, removing trailing empty cells
+                while row_content and row_content[-1] == '':
+                    row_content.pop()
+                lines.append(';'.join(row_content))
+            
+            # Write to file
+            with open(filepath, 'w', encoding='utf-8') as f:
+                f.write('\n'.join(lines))
+                
+        except IOError as e:
+            raise SavingSpreadsheetException(f"Error writing to file {filepath}: {str(e)}")
         except Exception as e:
-            print(f"Unexpected error creating file: {str(e)}")
-            return False
-
-    def load(self, path):
-        """Load spreadsheet data from the specified file path."""
+            raise SavingSpreadsheetException(f"Unexpected error while saving spreadsheet: {str(e)}")
+        
+    def load(self, filepath, spreadsheet):
         try:
-            if not self._validate_file_path(path):
-                return None
-            if not os.path.exists(path):
-                raise ReadingSpreadsheetException(f"File does not exist: {path}")
-            
-            with open(path, 'r') as file:
+            with open(filepath, 'r', newline='') as file:
                 reader = csv.reader(file, delimiter=';')
-                spreadsheet_data = list(reader)
-                self.show.printContentSpreadsheet(spreadsheet_data)
-                return spreadsheet_data
-        except ReadingSpreadsheetException as e:
-            print(f"Error loading file: {str(e)}")
-            return None
+                row_num = 1
+                
+                for row in reader:
+                    col_num = 1
+                    for content in row:
+                        # Skip empty cells
+                        if content:
+                            # Convert function arguments from ',' back to ';' in formulas
+                            if content.startswith('='):
+                                content = re.sub(r'(?<=\w),(?=\w)', ';', content)
+                            
+                            # Convert column number to letter (1 -> A, 2 -> B, etc.)
+                            col_letter = Coordinate.number_to_column(col_num)
+                            # Create coordinate in spreadsheet format (e.g., A1)
+                            coord_str = f"{col_letter}{row_num}"
+                            
+                            # Set the cell content in the provided spreadsheet
+                            spreadsheet.set(coord_str, content)
+                        
+                        col_num += 1
+                    row_num += 1
+                    
+        except FileNotFoundError:
+            raise FileNotFoundError(f"File '{filepath}' not found.")
         except Exception as e:
-            print(f"Unexpected error loading file: {str(e)}")
-            return None
-
-    def save(self, path, spreadsheet):
-        """Save spreadsheet data to the specified file path."""
-        try:
-            directory, file_name = os.path.split(path)
-            if not file_name:
-                raise SavingSpreadsheetException("Invalid file name: None or empty")
-            if not self._validate_file_path(path):
-                return False
-            if directory:
-                self._validate_directory(directory)
-            else:
-                directory = os.getcwd()
-
-            # Convert spreadsheet cells to a grid format
-            max_row = max(sorted(set(int(key[1:]) for key in spreadsheet.cells.keys())), default=0)
-            if max_row == 0:
-                raise SavingSpreadsheetException("No data to save: Spreadsheet is empty")
-            
-            letras = [chr(letra) for letra in range(ord('A'), ord('Z') + 1)]
-            spreadsheet_data = [
-                [
-                    str(spreadsheet.cells.get(f"{col}{row}", Cell()).content.getValue()).replace(";", ",") + ";"
-                    for col in letras
-                ]
-                for row in range(1, max_row + 1)
-            ]
-
-            with open(os.path.join(directory, file_name), 'w') as file:
-                for row in spreadsheet_data:
-                    file.write(''.join(map(str, row)) + '\n')
-            
-            print(f"File saved successfully at {path}")
-            return True
-        except (ReadingSpreadsheetException, SavingSpreadsheetException) as e:
-            print(f"Error saving file: {str(e)}")
-            return False
-        except Exception as e:
-            print(f"Unexpected error saving file: {str(e)}")
-            return False
+            raise ValueError(f"Error loading S2V file: {str(e)}")
