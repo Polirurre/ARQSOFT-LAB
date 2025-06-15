@@ -4,13 +4,16 @@ from Content.TextContent import TextContent
 from Content.FormulaContent import FormulaContent
 
 class Cell:
-    def __init__(self, coordinate=None, content=None):
-        self.coordinate = coordinate
+    def __init__(self, coordinate, content=""):
+        self.coordinate = Coordinate(coordinate)
         self.setValue(content if content is not None else "")
         self.refCells = set()
 
     def getValue(self):
-        return self.content
+        return self.content.getValue()
+    
+    def __str__(self):
+        return str(self.content.getValue())
 
     def setValue(self, input: str):
         print(input) #TO DO
