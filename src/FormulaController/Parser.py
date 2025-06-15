@@ -88,12 +88,11 @@ class Parser:
     def is_coordinate(self, token):
         # A cell coordinate is defined as one or more uppercase letters followed by one or more digits
         coordinate_pattern = r'^[A-Z]+\d+$'
-        #print(re.match(coordinate_pattern, token) is not None)
         return re.match(coordinate_pattern, token) is not None
 
     def is_function(self, token):
         # List of valid function names
-        valid_functions = ["SUMA", "PROMEDIO", "MAX", "MIN"]
+        valid_functions = ["SUM", "AVERAGE", "MAX", "MIN"]
         return token in valid_functions
     
     def is_number(self, token):

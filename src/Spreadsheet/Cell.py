@@ -13,7 +13,7 @@ class Cell:
         return self.content
 
     def setValue(self, input: str):
-        print(input)
+        print(input) #TO DO
         try:
             # Try converting the string to a float
             # If successful, add Numbercontent
