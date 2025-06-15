@@ -16,7 +16,7 @@ class Tokenizer:
             'closing_round_bracket': r'\)',
             'colon': r':',
             'semi_colon': r';',
-            'function': r'SUMA|PROMEDIO|MAX|MIN',
+            'function': r'SUM|AVERAGE|MAX|MIN',
             'range': r'[A-Z]+\d+:[A-Z]+\d+'
         }
 
